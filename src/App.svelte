@@ -17,13 +17,15 @@ import { onMount } from 'svelte';
 </script>
 
 <main>
-	<div class="preview">{@html marked(markdown)}</div>
 	{#if edit}
-		<div class="editor-container">
-			<div class="editor-head"><span>Editor</span><button>Publish</button></div>
-			<textarea bind:value={markdown} placeholder="Enter markdown here"/>
-		</div>
+	<div class="editor-container">
+		<div class="editor-head"><span>Editor</span><button>Publish</button></div>
+		<textarea bind:value={markdown} placeholder="Enter markdown here"/>
+	</div>
 	{/if}
+	<div class="preview">
+		<div class="output">{@html marked(markdown)}</div>
+	</div>
 </main>
 
 <style>
@@ -32,22 +34,30 @@ import { onMount } from 'svelte';
 	}
 
 	main {
+		background: #212121;
 		display: flex;
-		flex-direction: column;
-		height: 100%;
+		height: 100vh;
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
 	}
 
 	.preview {
-		background: green !important;
-		padding: 36px;
+		background: #eee;
+		display: flex;
+		justify-content: center;
 		overflow: auto;
-		width: 100%;
+		width: 50vw;
+	}
+
+	.output {
+		margin-top: 160px;
+		width: 30vw;
 	}
 
 	.editor-container {
-		height: 300px;
-		width: 100%;
-		background: blue;
+		width: 50vw;
 	}
 	
 	textarea {
@@ -56,10 +66,13 @@ import { onMount } from 'svelte';
 		font-size: 14px;
 		font-family: monospace, Roboto;
 		border: none;
-		height: 100%;
+		height: calc(100% - 64px);
 		width: 100%;
 		margin: 0;
-		padding: 36px;
+		padding: 32px;
+		border-radius: none;
+		resize: none;
+		margin-top: 64px;
 	}
 
 	textarea:focus, input:focus {
@@ -68,6 +81,8 @@ import { onMount } from 'svelte';
 
 	
 	.editor-head {
+		position: fixed;
+		width: 50%;
 		background: #212121;
 		color: white;
 		margin: 0px;
@@ -76,7 +91,7 @@ import { onMount } from 'svelte';
 		height: 64px;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0px 24px;
+		padding: 0px 12px 0px 24px;
 	}
 
 	button {
